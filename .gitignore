@@ -2,11 +2,11 @@ venv/
 *.sqlite3
 __pycache__
 .idea/
-front_end/node_modules
-front_end/.pnp
-front_end/build
+frontend/node_modules
+frontend/.pnp
+frontend/build
 .pnp.js
-front_end/coverage
+frontend/coverage
 .DS_Store
 .env.local
 .env.development.local
