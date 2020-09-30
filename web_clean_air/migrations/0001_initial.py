@@ -8,79 +8,151 @@ class Migration(migrations.Migration):
 
     initial = True
 
-    dependencies = [
-    ]
+    dependencies = []
 
     operations = [
         migrations.CreateModel(
-            name='City',
+            name="City",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=64, verbose_name='name')),
-                ('commune_name', models.CharField(max_length=64, verbose_name='commune name')),
-                ('district_name', models.CharField(max_length=64, verbose_name='district name')),
-                ('province_name', models.CharField(max_length=64, verbose_name='province name')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("name", models.CharField(max_length=64, verbose_name="name")),
+                (
+                    "commune_name",
+                    models.CharField(max_length=64, verbose_name="commune name"),
+                ),
+                (
+                    "district_name",
+                    models.CharField(max_length=64, verbose_name="district name"),
+                ),
+                (
+                    "province_name",
+                    models.CharField(max_length=64, verbose_name="province name"),
+                ),
             ],
             options={
-                'verbose_name': 'city',
-                'verbose_name_plural': 'cities',
+                "verbose_name": "city",
+                "verbose_name_plural": "cities",
             },
         ),
         migrations.CreateModel(
-            name='IndexQuality',
+            name="IndexQuality",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=64, verbose_name='name')),
-                ('bad', models.IntegerField(verbose_name='bad')),
-                ('sufficient', models.IntegerField(verbose_name='sufficient')),
-                ('moderate', models.IntegerField(verbose_name='moderate')),
-                ('good', models.IntegerField(verbose_name='good')),
-                ('very_good', models.IntegerField(verbose_name='very_good')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("name", models.CharField(max_length=64, verbose_name="name")),
+                ("bad", models.IntegerField(verbose_name="bad")),
+                ("sufficient", models.IntegerField(verbose_name="sufficient")),
+                ("moderate", models.IntegerField(verbose_name="moderate")),
+                ("good", models.IntegerField(verbose_name="good")),
+                ("very_good", models.IntegerField(verbose_name="very_good")),
             ],
             options={
-                'verbose_name': 'index',
-                'verbose_name_plural': 'indexes',
+                "verbose_name": "index",
+                "verbose_name_plural": "indexes",
             },
         ),
         migrations.CreateModel(
-            name='MeasuringStation',
+            name="MeasuringStation",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=64, verbose_name='name')),
-                ('gegrLat', models.FloatField(verbose_name='latitude')),
-                ('gegrLon', models.FloatField(verbose_name='longitude')),
-                ('city', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='web_clean_air.city')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("name", models.CharField(max_length=64, verbose_name="name")),
+                ("gegrLat", models.FloatField(verbose_name="latitude")),
+                ("gegrLon", models.FloatField(verbose_name="longitude")),
+                (
+                    "city",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to="web_clean_air.city",
+                    ),
+                ),
             ],
             options={
-                'verbose_name': 'station',
-                'verbose_name_plural': 'stations',
+                "verbose_name": "station",
+                "verbose_name_plural": "stations",
             },
         ),
         migrations.CreateModel(
-            name='MeasuringStands',
+            name="MeasuringStands",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=64, verbose_name='name')),
-                ('code', models.CharField(max_length=64, verbose_name='code')),
-                ('index', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='web_clean_air.indexquality')),
-                ('station', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='web_clean_air.measuringstation')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("name", models.CharField(max_length=64, verbose_name="name")),
+                ("code", models.CharField(max_length=64, verbose_name="code")),
+                (
+                    "index",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to="web_clean_air.indexquality",
+                    ),
+                ),
+                (
+                    "station",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to="web_clean_air.measuringstation",
+                    ),
+                ),
             ],
             options={
-                'verbose_name': 'stand',
-                'verbose_name_plural': 'stands',
+                "verbose_name": "stand",
+                "verbose_name_plural": "stands",
             },
         ),
         migrations.CreateModel(
-            name='MeasuringData',
+            name="MeasuringData",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('date', models.DateTimeField(unique=True, verbose_name='date')),
-                ('value', models.FloatField(verbose_name='value')),
-                ('sensor', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='web_clean_air.measuringstands')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("date", models.DateTimeField(unique=True, verbose_name="date")),
+                ("value", models.FloatField(verbose_name="value")),
+                (
+                    "sensor",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to="web_clean_air.measuringstands",
+                    ),
+                ),
             ],
             options={
-                'verbose_name': 'measure',
-                'verbose_name_plural': 'measurement',
+                "verbose_name": "measure",
+                "verbose_name_plural": "measurement",
             },
         ),
     ]

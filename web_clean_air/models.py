@@ -23,7 +23,7 @@ class MeasuringStation(models.Model):
     gegrLat = models.FloatField(_("latitude"))
     gegrLon = models.FloatField(_("longitude"))
 
-    city = models.ForeignKey(City, on_delete=models.CASCADE)
+    cities = models.ForeignKey(City, on_delete=models.CASCADE)
 
     class Meta:
         verbose_name = _("station")
@@ -55,8 +55,8 @@ class MeasuringStands(models.Model):
     name = models.CharField(_("name"), max_length=64)
     code = models.CharField(_("code"), max_length=64)
 
-    index = models.ForeignKey(IndexQuality, on_delete=models.CASCADE)
-    station = models.ForeignKey(MeasuringStation, on_delete=models.CASCADE)
+    indexes = models.ForeignKey(IndexQuality, on_delete=models.CASCADE)
+    stations = models.ForeignKey(MeasuringStation, on_delete=models.CASCADE)
 
     class Meta:
         verbose_name = _("stand")
@@ -68,10 +68,10 @@ class MeasuringStands(models.Model):
 
 class MeasuringData(models.Model):
 
-    date = models.DateTimeField(_("date"), unique=True)
-    value = models.FloatField(_("value"))
+    date = models.DateTimeField(_("date"))
+    value = models.FloatField(_("value"), null=True, blank=True)
 
-    sensor = models.ForeignKey(MeasuringStands, on_delete=models.CASCADE)
+    sensors = models.ForeignKey(MeasuringStands, on_delete=models.CASCADE)
 
     class Meta:
         verbose_name = _("measure")
