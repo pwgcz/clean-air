@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components/macro';
 import TextInput from './TextInput';
 import Button from './Button';
@@ -8,13 +8,17 @@ const SearchWrapper = styled.div`
   margin: 3rem auto;
 `;
 
-export default function Search() {
-  const handleSubmit = (event) => {};
+export default function Search({ getSearchResult }) {
+  const [input, setInput] = useState('');
+
+  const chandleChange = (event) => {
+    setInput(event.target.value);
+  };
 
   return (
     <SearchWrapper>
-      <form onSubmit={handleSubmit}>
-        <TextInput />
+      <form onSubmit={getSearchResult}>
+        <TextInput value={input} onChange={chandleChange} />
         <Button name="Search" />
       </form>
     </SearchWrapper>

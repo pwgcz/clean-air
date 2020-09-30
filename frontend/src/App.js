@@ -29,16 +29,32 @@ export default function App() {
     }
   }
 
+  async function getSearchResult(event) {
+    try {
+      event.preventDefault();
+      const search = event.target.elements[0].value;
+      const response = await axios.get(`/cities-stations/?search=${search}`);
+      setStations(response.data);
+      if (response.data.length === 0) {
+        setIsInDatabase(false);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   useEffect(() => {
     fetchStations();
   }, []);
 
+  console.log(stations);
+  console.log();
   return (
     <>
       <GlobalStyle />
       <Navbar />
-      <Search />
-      <GeoMap />
+      <Search getSearchResult={getSearchResult} />
+      <GeoMap stations={stations} />
     </>
   );
 }

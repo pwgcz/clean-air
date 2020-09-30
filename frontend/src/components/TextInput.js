@@ -12,6 +12,6 @@ const StyledInput = styled.input`
   background: transparent;
 `;
 
-export default function TextInput() {
-  return <StyledInput type="text" />;
+export default function TextInput({ onChange, value }) {
+  return <StyledInput type="text" onChange={onChange} value={value} />;
 }
