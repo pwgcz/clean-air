@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { DataDiagrams } from './DataDiagrams';
+import DataDiagrams from './DataDiagrams';
 
-export const MeasuringStands = ({ station }) => {
+export default function MeasuringStands({ station }){
   const [stands, setStands] = useState([]);
 
   async function fetchStands() {
     try {
-      const resonse = await axios.get(`/measuring-stands/${station.id}`);
+      const resonse = await axios.get(`/measuring-stands/${station.id}/`);
       setStands(resonse.data);
     } catch (error) {
       console.log(error);
@@ -15,19 +15,19 @@ export const MeasuringStands = ({ station }) => {
   }
 
   useEffect(() => {
-    fetchStands();
+    fetchStands()
   }, [station.id]);
 
   return (
     <>
-      {stands.map((sta) => {
+      {stands.map((stand) => {
         return (
-          <div key={sta.id}>
+          <div key={stand.id}>
             <h4>
-              {sta.name} ({sta.code})
+              {stand.name} ({stand.code})
             </h4>
             <div className="stand-card">
-              <DataDiagrams stand={sta} />
+              <DataDiagrams stand={stand} />
             </div>
           </div>
         );

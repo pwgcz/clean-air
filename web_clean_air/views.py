@@ -65,8 +65,8 @@ class MeasuringDataList(APIView):
 
 class QualityIndicators(APIView):
     def get(self, request, pk, format=None):
-        print(pk)
-        index_quality = IndexQuality.objects.get(pk=pk)
+
+        index_quality = IndexQuality.objects.filter(id=pk)
         serializer = IndexQualitySerializer(index_quality, many=True)
 
         return Response(serializer.data)

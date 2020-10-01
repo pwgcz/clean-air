@@ -8,7 +8,7 @@ const LeafletStyles = createGlobalStyle`
     border-radius: 20px;
     box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
     width: 100vw;
-    height: 50vh;
+    height: 70vh;
   }
 `;
 
@@ -16,19 +16,20 @@ const MapWrapper = styled.div`
   display: flex;
   margin: 1rem auto;
   justify-content: center;
-
-  width: 50%;
+  width: 80%;
 
 }
 `;
 
-export default function GeoMap({ stations, handleStationClick }) {
+export default function GeoMap({ stations, onClickStation }) {
   const [leafPoint, setLeafPoint] = useState(
     new Icon({
       iconUrl: 'icons8-natural-food-30.png',
       iconSize: [30, 30],
     }),
   );
+
+
 
   return (
     <>
@@ -55,7 +56,7 @@ export default function GeoMap({ stations, handleStationClick }) {
                     key={station.id}
                     position={[station.gegrLat, station.gegrLon]}
                     icon={leafPoint}
-                    onClick={handleStationClick}
+                    onClick={(event)=>{onClickStation(station)}}
                   >
                     <Popup>{station.name}</Popup>
                     <Tooltip>{station.name}</Tooltip>

@@ -1,19 +1,36 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Bar, BarChart, Tooltip, CartesianGrid, XAxis, YAxis, ResponsiveContainer } from 'recharts';
+import styled from 'styled-components/macro';
 
-export const MeasuringData = ({ stand }) => {
+
+
+const StyledCustomTooltip = styled.div`
+  display: flex;
+  padding: 1rem;
+  flex-direction: column;
+  background-color: rgba(87, 81, 81, 0.68);
+  border-radius: 6px;
+`;
+
+const StyledBar = styled(BarChart)`
+   padding:  1rem;
+`;
+
+
+export default function MeasuringData({ stand }){
   const [data, setData] = useState([]);
   const [quality, setQuality] = useState('');
   let arrData = [];
   let arrQuality = [];
   let tempArrData = Array(5).fill(1);
-
+console.log(stand);
   async function fetchMeasuringData() {
     try {
-      const resonseMeasure = await axios.get(`/measuring-data/${stand.id}`);
+      const resonseMeasure = await axios.get(`/measuring-data/${stand.id}/`);
+
       setData(resonseMeasure.data.reverse());
-      const resonseIndex = await axios.get(`/quality-indicators/${stand.index_id}`);
+      const resonseIndex = await axios.get(`/quality-indicators/${stand.indexes}/`);
       setQuality(resonseIndex.data);
     } catch (error) {
       console.log(error);
@@ -72,11 +89,13 @@ export const MeasuringData = ({ stand }) => {
   const CustomTooltip = ({ active, payload, label }) => {
     if (active) {
       return (
-        <div className="custom-tooltip">
-          <p>Value: {payload[0].payload.value ? payload[0].payload.value.toPrecision(3) : null} </p>
-          <p>Time: {payload[0].payload.date.slice(11, 16)}</p>
-          <p>Date: {payload[0].payload.date.slice(0, 10)}</p>
-        </div>
+        <StyledCustomTooltip>
+
+      {   // <p>Value:{payload[0].payload.value ? payload[0].payload.value.toPrecision(3) : null} </p>
+          // <p>Time: {payload[0].payload.date.slice(11, 16)}</p>
+          // <p>Date: {payload[0].payload.date.slice(0, 10)}</p>
+        }
+        </StyledCustomTooltip>
       );
     }
     return null;
@@ -84,7 +103,7 @@ export const MeasuringData = ({ stand }) => {
 
   return (
     <ResponsiveContainer width="95%" height={300}>
-      <BarChart
+      <StyledBar
         data={barData}
         className="chart-wrapper"
         margin={{
@@ -105,7 +124,7 @@ export const MeasuringData = ({ stand }) => {
         <Bar stackId="pollution" dataKey="sufficient" fill="#FF5733" />
         <Bar stackId="pollution" dataKey="bad" fill="#900C3F " />
         <Bar stackId="pollution" dataKey="very_bad" fill="##581845  " />
-      </BarChart>
+      </StyledBar>
     </ResponsiveContainer>
   );
 };
