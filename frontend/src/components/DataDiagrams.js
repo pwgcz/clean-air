@@ -89,16 +89,18 @@ export default function MeasuringData({ stand }) {
   const formatXAxis = (tickItem) => {
     return '';
   };
-
-  const CustomTooltip = ({ active, payload, label }) => {
-    if (active) {
-      return (
-        <StyledCustomTooltip>
-          <p>Value:{payload[0].payload.value ? payload[0].payload.value.toPrecision(3) : null} </p>
-          <p>Time: {payload[0].payload.date.slice(11, 16)}</p>
-          <p>Date: {payload[0].payload.date.slice(0, 10)}</p>
-        </StyledCustomTooltip>
-      );
+  // double if topotect from to quick passed mouse cursor on barchart
+  const CustomTooltip = ({ payload, label, active }) => {
+    if (active && payload) {
+      if (payload[0]) {
+        return payload[0].payload ? (
+          <StyledCustomTooltip>
+            <p>Value: {payload[0].payload.value.toPrecision(3)}</p>
+            <p>Time: {payload[0].payload.date.slice(11, 16)}</p>
+            <p>Date: {payload[0].payload.date.slice(0, 10)}</p>
+          </StyledCustomTooltip>
+        ) : null;
+      }
     }
     return null;
   };
