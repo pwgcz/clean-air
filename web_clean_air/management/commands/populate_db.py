@@ -84,7 +84,7 @@ class Command(BaseCommand):
                     if quality_index.name == measuring_stand.code:
                         measuring_stand.indexes = quality_index
                         measuring_stand.save()
-                        print(connection.queries)
+
 
         # MeasuringData
 

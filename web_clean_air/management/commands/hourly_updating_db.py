@@ -14,8 +14,9 @@ class Command(BaseCommand):
 
     def _delete(self):
         datetime.timedelta(days=3)
-        measuring_data = MeasuringData.objects.filter(date__gt=datetime.datetime.now() - datetime.timedelta(days=3))
+        measuring_data = MeasuringData.objects.filter(date__lt=pytz.utc.localize(datetime.datetime.now() - datetime.timedelta(days=3)))
         measuring_data.delete()
+
 
 
     def _update(self):
