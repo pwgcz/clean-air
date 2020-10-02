@@ -4,6 +4,7 @@ import Navbar from './components/Navbar';
 import Search from './components/Search';
 import GeoMap from './components/GeoMap';
 import StationsList from './components/StationsList';
+import Legend from './components/Legend';
 import axios from 'axios';
 
 const GlobalStyle = createGlobalStyle`
@@ -36,7 +37,7 @@ export default function App() {
       const search = event.target.elements[0].value;
       const response = await axios.get(`/cities-stations/?search=${search}`);
       setStations(response.data);
-
+      setIsInDatabase(true);
       if (response.data.length === 0) {
         setIsInDatabase(false);
       }
@@ -49,18 +50,18 @@ export default function App() {
     fetchStations();
   }, []);
 
-
   const onClickStation = (data) => {
-     setStationGraph([data])
+    setStationGraph([data]);
   };
 
   return (
     <>
       <GlobalStyle />
       <Navbar />
-      <Search getSearchResult={getSearchResult} />
-      <GeoMap stations={stations}  onClickStation={onClickStation} />
+      <Search getSearchResult={getSearchResult} isInDatabase={isInDatabase} />
+      <GeoMap stations={stations} onClickStation={onClickStation} />
       <StationsList stations={stationGraph} />
+      <Legend />
     </>
   );
 }

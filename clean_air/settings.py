@@ -10,7 +10,7 @@ SECRET_KEY = config("SECRET_KEY")
 
 DEBUG = config("DEBUG", default=True, cast=bool)
 
-ALLOWED_HOSTS = ["localhost", "127.0.0.1"]
+ALLOWED_HOSTS = ["localhost", "127.0.0.1", ".herokuapp.com"]
 
 
 # Application definition
@@ -107,11 +107,12 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
+STATIC_ROOT = os.path.join(BASE_DIR, "frontend/build/static")
+STATIC_URL = os.path.join(BASE_DIR, "frontend/build/")
 
-STATIC_URL = "/static/"
 
-# TODO app heroku origin
 CORS_ALLOWED_ORIGINS = [
+    "https://clean-air.herokuapp.com"
     "http://localhost:8000",
     "http://127.0.0.1:8000",
     "http://localhost:3000",

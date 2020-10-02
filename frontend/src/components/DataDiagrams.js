@@ -1,30 +1,32 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Bar, BarChart, Tooltip, CartesianGrid, XAxis, YAxis, ResponsiveContainer } from 'recharts';
+import {
+  Bar,
+  BarChart,
+  Tooltip,
+  CartesianGrid,
+  XAxis,
+  YAxis,
+  ResponsiveContainer,
+  Brush,
+} from 'recharts';
 import styled from 'styled-components/macro';
-
-
 
 const StyledCustomTooltip = styled.div`
   display: flex;
-  padding: 1rem;
+  padding: 2rem;
   flex-direction: column;
   background-color: rgba(87, 81, 81, 0.68);
   border-radius: 6px;
 `;
 
-const StyledBar = styled(BarChart)`
-   padding:  1rem;
-`;
-
-
-export default function MeasuringData({ stand }){
+export default function MeasuringData({ stand }) {
   const [data, setData] = useState([]);
-  const [quality, setQuality] = useState('');
+  const [quality, setQuality] = useState([]);
   let arrData = [];
   let arrQuality = [];
   let tempArrData = Array(5).fill(1);
-console.log(stand);
+
   async function fetchMeasuringData() {
     try {
       const resonseMeasure = await axios.get(`/measuring-data/${stand.id}/`);
@@ -41,7 +43,8 @@ console.log(stand);
     fetchMeasuringData();
   }, [stand.id, stand.index_id]);
 
-  // object factory vreating object of quality indef limit value
+  console.log({ data, quality });
+  // object factory wreating object of quality index limit value
   const dataFacroty = (arr) => {
     return {
       very_good: arr[0],
@@ -54,7 +57,7 @@ console.log(stand);
   };
 
   // slice data value of each parameter in arrray depending on quality index value
-  if (quality !== '') {
+  if (quality.length !== 0) {
     arrQuality = [
       0,
       quality.very_good,
@@ -63,6 +66,7 @@ console.log(stand);
       quality.sufficient,
       quality.bad,
     ];
+    console.log({ quality });
     arrData = data.map((dataItem) => {
       return dataFacroty(
         tempArrData.map((item, i) => {
@@ -77,7 +81,7 @@ console.log(stand);
       );
     });
   }
-
+  console.log(arrData);
   const barData = data.map((item, i) => {
     return Object.assign(item, arrData[i]);
   });
@@ -90,11 +94,9 @@ console.log(stand);
     if (active) {
       return (
         <StyledCustomTooltip>
-
-      {   // <p>Value:{payload[0].payload.value ? payload[0].payload.value.toPrecision(3) : null} </p>
-          // <p>Time: {payload[0].payload.date.slice(11, 16)}</p>
-          // <p>Date: {payload[0].payload.date.slice(0, 10)}</p>
-        }
+          <p>Value:{payload[0].payload.value ? payload[0].payload.value.toPrecision(3) : null} </p>
+          <p>Time: {payload[0].payload.date.slice(11, 16)}</p>
+          <p>Date: {payload[0].payload.date.slice(0, 10)}</p>
         </StyledCustomTooltip>
       );
     }
@@ -102,29 +104,30 @@ console.log(stand);
   };
 
   return (
-    <ResponsiveContainer width="95%" height={300}>
-      <StyledBar
+    <ResponsiveContainer width="100%" height={400}>
+      <BarChart
         data={barData}
-        className="chart-wrapper"
         margin={{
-          top: 5,
-          right: 5,
-          left: 5,
-          bottom: 5,
+          top: 40,
+          right: 40,
+          left: 0,
+          bottom: 40,
         }}
+        barSize={20}
       >
         <CartesianGrid stroke="#ccc" strokeDasharray="1 1" />
         <XAxis height={50} dataKey="date" tickFormatter={formatXAxis} />
         <YAxis width={100} dataKey="value" label={{ value: stand.code + '[ug/m3]', angle: -90 }} />
 
         <Tooltip content={<CustomTooltip />} />
-        <Bar stackId="pollution" dataKey="very_good" fill="#33FF57" />
-        <Bar stackId="pollution" dataKey="good" fill="#DBFF33" />
-        <Bar stackId="pollution" dataKey="moderate" fill="#FFBD33" />
-        <Bar stackId="pollution" dataKey="sufficient" fill="#FF5733" />
-        <Bar stackId="pollution" dataKey="bad" fill="#900C3F " />
-        <Bar stackId="pollution" dataKey="very_bad" fill="##581845  " />
-      </StyledBar>
+        <Bar stackId="pollution" dataKey="very_good" fill="green" />
+        <Bar stackId="pollution" dataKey="good" fill="yellow" />
+        <Bar stackId="pollution" dataKey="moderate" fill="orange" />
+        <Bar stackId="pollution" dataKey="sufficient" fill="red" />
+        <Bar stackId="pollution" dataKey="bad" fill="purple" />
+        <Bar stackId="pollution" dataKey="very_bad" fill="maroon" />
+        <Brush />
+      </BarChart>
     </ResponsiveContainer>
   );
-};
+}

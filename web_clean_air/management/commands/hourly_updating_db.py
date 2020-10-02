@@ -12,6 +12,12 @@ from web_clean_air.models import (
 class Command(BaseCommand):
     help = "Update value from government API every hour"
 
+    def _delete(self):
+        datetime.timedelta(days=3)
+        measuring_data = MeasuringData.objects.filter(date__gt=datetime.datetime.now() - datetime.timedelta(days=3))
+        measuring_data.delete()
+
+
     def _update(self):
         measuring_stands = MeasuringStands.objects.all()
         for measuring_stand in measuring_stands:
@@ -27,8 +33,11 @@ class Command(BaseCommand):
                     date=pytz.utc.localize(
                         datetime.datetime.strptime(data["date"], "%Y-%m-%d %H:%M:%S")
                     ),
-                    sensor=measuring_stand,
+                    sensors=measuring_stand,
                 )
 
     def handle(self, *args, **options):
+        self._delete()
         self._update()
+
+

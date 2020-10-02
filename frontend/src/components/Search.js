@@ -4,11 +4,11 @@ import TextInput from './TextInput';
 import Button from './Button';
 
 const SearchWrapper = styled.div`
-  width: 80vw;
+  width: 60vw;
   margin: 3rem auto;
 `;
 
-export default function Search({ getSearchResult }) {
+export default function Search({ getSearchResult, isInDatabase }) {
   const [input, setInput] = useState('');
 
   const chandleChange = (event) => {
@@ -18,7 +18,7 @@ export default function Search({ getSearchResult }) {
   return (
     <SearchWrapper>
       <form onSubmit={getSearchResult}>
-        <TextInput value={input} onChange={chandleChange} />
+        <TextInput value={input} onChange={chandleChange} isInDatabase={isInDatabase} />
         <Button name="Search" />
       </form>
     </SearchWrapper>

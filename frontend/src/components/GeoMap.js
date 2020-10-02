@@ -8,7 +8,7 @@ const LeafletStyles = createGlobalStyle`
     border-radius: 20px;
     box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
     width: 100vw;
-    height: 70vh;
+    height: 50vh;
   }
 `;
 
@@ -24,12 +24,10 @@ const MapWrapper = styled.div`
 export default function GeoMap({ stations, onClickStation }) {
   const [leafPoint, setLeafPoint] = useState(
     new Icon({
-      iconUrl: 'icons8-natural-food-30.png',
+      iconUrl: 'icons8-leaf-48.png',
       iconSize: [30, 30],
     }),
   );
-
-
 
   return (
     <>
@@ -56,7 +54,9 @@ export default function GeoMap({ stations, onClickStation }) {
                     key={station.id}
                     position={[station.gegrLat, station.gegrLon]}
                     icon={leafPoint}
-                    onClick={(event)=>{onClickStation(station)}}
+                    onClick={(event) => {
+                      onClickStation(station);
+                    }}
                   >
                     <Popup>{station.name}</Popup>
                     <Tooltip>{station.name}</Tooltip>

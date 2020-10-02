@@ -1,3 +1,4 @@
+from rest_framework.generics import get_object_or_404
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from django.db.models import Q
@@ -66,8 +67,8 @@ class MeasuringDataList(APIView):
 class QualityIndicators(APIView):
     def get(self, request, pk, format=None):
 
-        index_quality = IndexQuality.objects.filter(id=pk)
-        serializer = IndexQualitySerializer(index_quality, many=True)
+        index_quality = IndexQuality.objects.get(pk=pk)
+        serializer = IndexQualitySerializer(index_quality)
 
         return Response(serializer.data)
 

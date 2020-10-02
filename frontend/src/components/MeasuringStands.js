@@ -1,8 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import DataDiagrams from './DataDiagrams';
+import styled from 'styled-components/macro';
 
-export default function MeasuringStands({ station }){
+const DiagramWrapper = styled.div`
+  border: 1px solid black;
+  border-radius: 20px;
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+
+
+}
+`;
+
+export default function MeasuringStands({ station }) {
   const [stands, setStands] = useState([]);
 
   async function fetchStands() {
@@ -15,7 +25,7 @@ export default function MeasuringStands({ station }){
   }
 
   useEffect(() => {
-    fetchStands()
+    fetchStands();
   }, [station.id]);
 
   return (
@@ -26,12 +36,12 @@ export default function MeasuringStands({ station }){
             <h4>
               {stand.name} ({stand.code})
             </h4>
-            <div className="stand-card">
+            <DiagramWrapper>
               <DataDiagrams stand={stand} />
-            </div>
+            </DiagramWrapper>
           </div>
         );
       })}
     </>
   );
-};
+}

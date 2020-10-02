@@ -4,7 +4,7 @@ __pycache__
 .idea/
 frontend/node_modules
 frontend/.pnp
-frontend/build
+
 .pnp.js
 frontend/coverage
 .DS_Store

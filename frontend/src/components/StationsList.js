@@ -3,11 +3,10 @@ import styled from 'styled-components/macro';
 import MeasuringStands from './MeasuringStands';
 
 const StationWrapper = styled.div`
-  width: 100%;
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  flex-direction: column;
+  width: 80vw;
+  margin: 1rem auto;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  padding: 4rem;
 `;
 
 const InfoWrapper = styled.div`
@@ -17,20 +16,20 @@ const InfoWrapper = styled.div`
   border: 3px solid #74a57f;
   border-radius: 4rem;
 
-  h1{
-  position: relative;
-  font-size: 3rem;
-  height: auto;
-  text-align: center;
-  color: 	#C0C0C0;
-  justify-content: center;
-  }
-
-  p{
+  h1 {
+    position: relative;
     font-size: 3rem;
     height: auto;
     text-align: center;
-    color: 	#C0C0C0;
+    color: #c0c0c0;
+    justify-content: center;
+  }
+
+  p {
+    font-size: 3rem;
+    height: auto;
+    text-align: center;
+    color: #c0c0c0;
   }
 `;
 
@@ -49,7 +48,7 @@ export default function StationList({ stations }) {
     <StationWrapper>
       {stations.map((station) => {
         return (
-          <div key={station.id} className="station-card">
+          <div key={station.id}>
             <h1>{station.name}</h1>
             <MeasuringStands station={station} />
           </div>
