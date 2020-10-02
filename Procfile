@@ -1,1 +1,1 @@
-web: gunicorn store.wsgi --log-file -
+web: gunicorn clean_air.wsgi --log-file -
