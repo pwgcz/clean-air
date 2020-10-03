@@ -95,7 +95,7 @@ export default function MeasuringData({ stand }) {
       if (payload[0]) {
         return payload[0].payload ? (
           <StyledCustomTooltip>
-            <p>Value: {payload[0].payload.value.toPrecision(3)}</p>
+            <p>Value: {payload[0].payload.value ? payload[0].payload.value.toPrecision(3) : null}</p>
             <p>Time: {payload[0].payload.date.slice(11, 16)}</p>
             <p>Date: {payload[0].payload.date.slice(0, 10)}</p>
           </StyledCustomTooltip>
