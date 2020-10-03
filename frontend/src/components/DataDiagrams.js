@@ -14,10 +14,17 @@ import styled from 'styled-components/macro';
 
 const StyledCustomTooltip = styled.div`
   display: flex;
-  padding: 2rem;
+  padding: 1rem;
   flex-direction: column;
   background-color: rgba(87, 81, 81, 0.68);
   border-radius: 6px;
+  color: white;
+  text-align: center;
+  p {
+    height: 2px;
+    margin: 15px;
+    padding: 0;
+  }
 `;
 
 export default function MeasuringData({ stand }) {
@@ -66,7 +73,7 @@ export default function MeasuringData({ stand }) {
       quality.sufficient,
       quality.bad,
     ];
-    console.log({ quality });
+
     arrData = data.map((dataItem) => {
       return dataFacroty(
         tempArrData.map((item, i) => {
@@ -81,7 +88,7 @@ export default function MeasuringData({ stand }) {
       );
     });
   }
-  console.log(arrData);
+
   const barData = data.map((item, i) => {
     return Object.assign(item, arrData[i]);
   });
@@ -89,15 +96,31 @@ export default function MeasuringData({ stand }) {
   const formatXAxis = (tickItem) => {
     return '';
   };
+
+  const dateFormater = (param) => {
+    return new Intl.DateTimeFormat('pl-PL', {
+      year: 'numeric',
+      month: 'long',
+      day: '2-digit',
+    }).format(new Date(param));
+  };
+  const timeFormater = (param) => {
+    return new Intl.DateTimeFormat('pl-PL', {
+      hour: 'numeric',
+      minute: 'numeric',
+    }).format(new Date(param));
+  };
   // double if topotect from to quick passed mouse cursor on barchart
   const CustomTooltip = ({ payload, label, active }) => {
     if (active && payload) {
       if (payload[0]) {
         return payload[0].payload ? (
           <StyledCustomTooltip>
-            <p>Value: {payload[0].payload.value ? payload[0].payload.value.toPrecision(3) : null}</p>
-            <p>Time: {payload[0].payload.date.slice(11, 16)}</p>
-            <p>Date: {payload[0].payload.date.slice(0, 10)}</p>
+            <p>
+              Value: {payload[0].payload.value ? payload[0].payload.value.toPrecision(3) : null}
+            </p>
+            <p>Time: {timeFormater(label)}</p>
+            <p>{dateFormater(label)}</p>
           </StyledCustomTooltip>
         ) : null;
       }
@@ -128,7 +151,12 @@ export default function MeasuringData({ stand }) {
         <Bar stackId="pollution" dataKey="sufficient" fill="red" />
         <Bar stackId="pollution" dataKey="bad" fill="purple" />
         <Bar stackId="pollution" dataKey="very_bad" fill="maroon" />
-        <Brush />
+        <Brush
+          startIndex={barData.length - 25}
+          endIndex={barData.length - 1}
+          dataKey="date"
+          tickFormatter={timeFormater}
+        />
       </BarChart>
     </ResponsiveContainer>
   );
