@@ -25,6 +25,7 @@ const DropdownButton = styled.div`
   border-radius: 5px;
   width: 3rem;
   padding: 10px;
+  cursor: pointer;
 `;
 
 export default function TableRow({ name, color, children }) {
