@@ -58,7 +58,7 @@ class MeasuringStandsList(APIView):
 
 class MeasuringDataList(APIView):
     def get(self, request, pk, format=None):
-        measuring_data = MeasuringData.objects.filter(sensors=pk).order_by("-date")[:24]
+        measuring_data = MeasuringData.objects.filter(sensors=pk).order_by("-date")
         serializer = MeasuringDataSerializer(measuring_data, many=True)
 
         return Response(serializer.data)

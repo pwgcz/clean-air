@@ -119,8 +119,8 @@ export default function MeasuringData({ stand }) {
             <p>
               Value: {payload[0].payload.value ? payload[0].payload.value.toPrecision(3) : null}
             </p>
-            <p>Time: {timeFormater(label)}</p>
-            <p>{dateFormater(label)}</p>
+            <p>Time: {timeFormater(payload[0].payload.date)}</p>
+            <p>{dateFormater(payload[0].payload.date)}</p>
           </StyledCustomTooltip>
         ) : null;
       }
